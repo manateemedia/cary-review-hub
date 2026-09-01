@@ -1,0 +1,215 @@
+{
+  "generated": "2026-09-01T19:55:54",
+  "repo": "",
+  "companies": [
+    {
+      "slug": "gotacase",
+      "name": "GotACase",
+      "sections": [
+        {
+          "slug": "01-strategy",
+          "label": "Strategy",
+          "readme": "gotacase/01-strategy/README.md",
+          "files": [
+            {
+              "path": "gotacase/01-strategy/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 221,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "02-brand-and-design",
+          "label": "Brand and Design",
+          "readme": "gotacase/02-brand-and-design/README.md",
+          "files": [
+            {
+              "path": "gotacase/02-brand-and-design/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 266,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "03-website",
+          "label": "Website",
+          "readme": "gotacase/03-website/README.md",
+          "files": [
+            {
+              "path": "gotacase/03-website/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 251,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "04-copy-and-content",
+          "label": "Copy and Content",
+          "readme": "gotacase/04-copy-and-content/README.md",
+          "files": [
+            {
+              "path": "gotacase/04-copy-and-content/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 200,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "05-workflow",
+          "label": "Workflow",
+          "readme": "gotacase/05-workflow/README.md",
+          "files": [
+            {
+              "path": "gotacase/05-workflow/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 279,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "06-assets",
+          "label": "Assets",
+          "readme": "gotacase/06-assets/README.md",
+          "files": [
+            {
+              "path": "gotacase/06-assets/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 227,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "final-affairs",
+      "name": "Final Affairs",
+      "sections": [
+        {
+          "slug": "01-strategy",
+          "label": "Strategy",
+          "readme": "final-affairs/01-strategy/README.md",
+          "files": [
+            {
+              "path": "final-affairs/01-strategy/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 226,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "02-brand-and-design",
+          "label": "Brand and Design",
+          "readme": "final-affairs/02-brand-and-design/README.md",
+          "files": [
+            {
+              "path": "final-affairs/02-brand-and-design/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 271,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "03-website",
+          "label": "Website",
+          "readme": "final-affairs/03-website/README.md",
+          "files": [
+            {
+              "path": "final-affairs/03-website/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 256,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "04-copy-and-content",
+          "label": "Copy and Content",
+          "readme": "final-affairs/04-copy-and-content/README.md",
+          "files": [
+            {
+              "path": "final-affairs/04-copy-and-content/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 205,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "05-workflow",
+          "label": "Workflow",
+          "readme": "final-affairs/05-workflow/README.md",
+          "files": [
+            {
+              "path": "final-affairs/05-workflow/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 284,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "slug": "06-assets",
+          "label": "Assets",
+          "readme": "final-affairs/06-assets/README.md",
+          "files": [
+            {
+              "path": "final-affairs/06-assets/README.md",
+              "name": "README.md",
+              "kind": "markdown",
+              "size": 232,
+              "modified": "2026-09-01T19:51:48",
+              "status": "draft",
+              "note": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "shared",
+      "name": "Shared",
+      "sections": []
+    }
+  ]
+}

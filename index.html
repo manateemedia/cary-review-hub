@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cary Review Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+:root{
+  --bg:#F4F6F8; --panel:#FFFFFF; --panel-2:#EDF0F3; --line:#D9DEE4; --line-strong:#B8C0CA;
+  --ink:#171C24; --ink-2:#4B5563; --ink-3:#7B8794;
+  --accent:#0F6E6E; --accent-ink:#FFFFFF;
+  --gotacase:#1F4FB5; --final-affairs:#6B4A7A; --shared:#0F6E6E;
+  --draft:#8A94A0; --in-review:#B7791F; --approved:#2F855A; --changes-requested:#C0392B;
+  --draft-bg:#EEF1F4; --in-review-bg:#FBF1DC; --approved-bg:#E3F3EA; --changes-requested-bg:#FBE4E1;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --shadow:0 1px 2px rgba(23,28,36,.06),0 8px 24px -12px rgba(23,28,36,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14181E; --panel:#1B2129; --panel-2:#232B35; --line:#2C3541; --line-strong:#3E4956;
+    --ink:#E9EDF1; --ink-2:#AEB8C3; --ink-3:#7D8895;
+    --accent:#3FB3B3; --accent-ink:#0B1416;
+    --gotacase:#7BA0F0; --final-affairs:#B48CC6; --shared:#3FB3B3;
+    --draft:#8A94A0; --in-review:#E0A94A; --approved:#5CBE87; --changes-requested:#E56B5D;
+    --draft-bg:#252C35; --in-review-bg:#332A18; --approved-bg:#183126; --changes-requested-bg:#3A2220;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14181E; --panel:#1B2129; --panel-2:#232B35; --line:#2C3541; --line-strong:#3E4956;
+  --ink:#E9EDF1; --ink-2:#AEB8C3; --ink-3:#7D8895;
+  --accent:#3FB3B3; --accent-ink:#0B1416;
+  --gotacase:#7BA0F0; --final-affairs:#B48CC6; --shared:#3FB3B3;
+  --draft:#8A94A0; --in-review:#E0A94A; --approved:#5CBE87; --changes-requested:#E56B5D;
+  --draft-bg:#252C35; --in-review-bg:#332A18; --approved-bg:#183126; --changes-requested-bg:#3A2220;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.app{display:grid;grid-template-rows:auto 1fr;height:100vh}
+header{display:flex;align-items:center;gap:20px;padding:10px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand h1{margin:0;font:500 15px/1 var(--sans);letter-spacing:.01em}
+.brand .sub{font:400 12px var(--mono);color:var(--ink-3)}
+.companies{display:flex;gap:4px;padding:3px;background:var(--panel-2);border-radius:8px}
+.companies button{white-space:nowrap;padding:6px 12px;border-radius:6px;font-weight:500;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.companies button .dot{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.companies button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+.spacer{flex:1}
+.search{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:0 10px;height:34px;min-width:260px}
+.search input{border:0;background:none;color:var(--ink);font:inherit;width:100%;outline:none}
+.search svg{color:var(--ink-3);flex:none}
+.filters{display:flex;gap:4px}
+.filters button{white-space:nowrap;font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:5px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2)}
+.filters button[aria-pressed="true"]{border-color:var(--s);color:var(--s);background:var(--sbg)}
+.headlink{font:500 13px var(--sans);color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:6px}
+.headlink:hover{background:var(--panel-2);color:var(--ink)}
+
+main{display:grid;grid-template-columns:320px 1fr;min-height:0}
+nav{border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:12px 0 24px}
+.section{padding:8px 12px 4px}
+.section-h{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-radius:6px;width:100%;text-align:left}
+.section-h:hover{background:var(--panel-2)}
+.section-h .lbl{font-weight:600;font-size:13px}
+.section-h .cnt{font:400 11px var(--mono);color:var(--ink-3)}
+.section-h .chev{transition:transform .15s;color:var(--ink-3);margin-right:6px}
+.section[data-open="false"] .chev{transform:rotate(-90deg)}
+.section[data-open="false"] .files{display:none}
+.files{list-style:none;margin:2px 0 0;padding:0}
+.file{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:8px;width:100%;padding:6px 8px 6px 14px;border-radius:6px;text-align:left;color:var(--ink-2)}
+.file:hover{background:var(--panel-2);color:var(--ink)}
+.file[aria-current="true"]{background:var(--panel-2);color:var(--ink);box-shadow:inset 3px 0 0 var(--c)}
+.file .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+.file .ic{color:var(--ink-3);display:flex}
+.st{width:8px;height:8px;border-radius:50%;background:var(--s);flex:none}
+.empty-sec{padding:4px 22px 8px;font:12px var(--mono);color:var(--ink-3)}
+
+.view{display:grid;grid-template-rows:auto auto 1fr;min-height:0;min-width:0}
+.viewbar{display:flex;align-items:center;gap:14px;padding:10px 20px;border-bottom:1px solid var(--line);background:var(--panel);min-height:54px}
+.path{font:13px var(--mono);color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.path b{color:var(--ink);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:6px;font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;color:var(--s);background:var(--sbg);border:1px solid color-mix(in srgb,var(--s) 35%,transparent);white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--s)}
+.meta{font:12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.actions{display:flex;gap:6px;margin-left:auto}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:6px;border:1px solid var(--line);background:var(--panel);font-weight:500;font-size:13px;text-decoration:none;color:var(--ink-2)}
+.btn:hover{border-color:var(--line-strong);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.note{padding:8px 20px;background:var(--in-review-bg);color:var(--ink);border-bottom:1px solid var(--line);font-size:13px}
+.note b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.04em;text-transform:uppercase;margin-right:8px;color:var(--in-review)}
+.stage{position:relative;min-height:0;overflow:auto;background:var(--bg)}
+.stage iframe{width:100%;height:100%;border:0;background:#fff;display:block}
+.stage .frame-wrap{height:100%;display:flex;flex-direction:column}
+.prose{max-width:72ch;margin:0 auto;padding:40px 32px 80px;font-size:15.5px;line-height:1.65}
+.prose h1,.prose h2,.prose h3{text-wrap:balance;line-height:1.2;margin:1.6em 0 .5em}
+.prose h1{font-size:30px;margin-top:0}.prose h2{font-size:22px}.prose h3{font-size:17px}
+.prose pre{background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font:13px/1.5 var(--mono)}
+.prose code{font:.92em var(--mono);background:var(--panel-2);padding:.1em .35em;border-radius:4px}
+.prose pre code{background:none;padding:0}
+.prose table{border-collapse:collapse;width:100%;font-size:14px}
+.prose th,.prose td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.prose th{background:var(--panel-2)}
+.prose img{max-width:100%;border-radius:6px}
+.prose blockquote{margin:1em 0;padding:.2em 1em;border-left:3px solid var(--line-strong);color:var(--ink-2)}
+.prose hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.imgwrap{display:grid;place-items:center;padding:40px;min-height:100%;background:
+  repeating-conic-gradient(var(--panel-2) 0 25%,transparent 0 50%) 0 0/24px 24px}
+.imgwrap img{max-width:100%;max-height:calc(100vh - 160px);box-shadow:var(--shadow);background:#fff}
+.codewrap{padding:24px 32px}
+.codewrap pre{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;overflow-x:auto;font:13px/1.55 var(--mono);color:var(--ink)}
+.dl{display:grid;place-items:center;height:100%;text-align:center;color:var(--ink-2)}
+.dl .big{font:500 40px/1 var(--mono);color:var(--ink-3);margin-bottom:14px}
+
+/* dashboard */
+.dash{padding:28px 32px 60px;max-width:1100px}
+.dash h2{font:600 clamp(26px,3vw,34px)/1.15 var(--serif);margin:0 0 6px;letter-spacing:-.01em;text-wrap:balance;color:var(--c)}
+.dash .lede{color:var(--ink-2);margin:0 0 26px;max-width:62ch}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.tile:hover{border-color:var(--line-strong)}
+.tile .k{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--s);display:flex;align-items:center;gap:7px}
+.tile .k::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--s)}
+.tile .v{font:500 34px/1 var(--sans);font-variant-numeric:tabular-nums}
+.tile .h{font-size:12px;color:var(--ink-3)}
+.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.card h3{margin:0;padding:12px 16px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line)}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:0 16px;border-bottom:1px solid var(--line)}
+.rows li:last-child{border-bottom:0}
+.rows button{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;width:100%;padding:10px 0;text-align:left}
+.rows .nm{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rows .sm{font:12px var(--mono);color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rows .when{font:12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.secgrid{list-style:none;margin:0;padding:0}
+.secgrid li{padding:0}
+.secgrid button{display:grid;grid-template-columns:1fr auto;gap:12px;width:100%;padding:10px 16px;text-align:left;border-bottom:1px solid var(--line)}
+.secgrid li:last-child button{border-bottom:0}
+.secgrid button:hover{background:var(--panel-2)}
+.bar{display:flex;height:6px;width:140px;border-radius:3px;overflow:hidden;background:var(--panel-2)}
+.bar span{height:100%;background:var(--s)}
+.howto{margin-top:28px;padding:16px 18px;border:1px dashed var(--line-strong);border-radius:10px;color:var(--ink-2);font-size:13px;max-width:70ch}
+.howto code{font:12px var(--mono);background:var(--panel-2);padding:.1em .4em;border-radius:4px}
+.errbox{margin:60px auto;max-width:56ch;padding:22px 24px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.errbox h2{margin:0 0 8px;font-size:18px}
+.errbox code{font:13px var(--mono);background:var(--panel-2);padding:.15em .45em;border-radius:4px}
+.hidden{display:none!important}
+@media (max-width:900px){
+  main{grid-template-columns:1fr}
+  nav{display:none}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .search{min-width:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><h1>Cary Review Hub</h1><span class="sub" id="gen"></span></div>
+    <div class="companies" id="companies" role="tablist"></div>
+    <div class="spacer"></div>
+    <label class="search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Find a file…" aria-label="Find a file"></label>
+    <div class="filters" id="filters"></div>
+    <a class="headlink" id="decisions" href="#" data-path="DECISIONS.md">Decisions</a>
+    <a class="headlink" id="repolink" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+  </header>
+  <main>
+    <nav id="tree" aria-label="Files"></nav>
+    <section class="view">
+      <div class="viewbar" id="viewbar"></div>
+      <div class="note hidden" id="note"></div>
+      <div class="stage" id="stage"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+const STATUSES = ["draft","in-review","approved","changes-requested"];
+const STATUS_LABEL = {"draft":"Draft","in-review":"In review","approved":"Approved","changes-requested":"Changes requested"};
+const state = { manifest:null, company:null, file:null, q:"", filters:new Set(), open:{} };
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate = iso => { const d=new Date(iso); return isNaN(d)?"":d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}); };
+const fmtSize = n => n<1024?`${n} B`:n<1048576?`${(n/1024).toFixed(0)} KB`:`${(n/1048576).toFixed(1)} MB`;
+const cvar = slug => `var(--${slug})`;
+const svar = st => `--s:var(--${st});--sbg:var(--${st}-bg)`;
+
+const ICONS = {
+  html:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 8-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></svg>',
+  markdown:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
+  text:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
+  image:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 16-5-5-9 9"/></svg>',
+  pdf:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/></svg>',
+  code:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4H6a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h2M16 4h2a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-2"/></svg>',
+  download:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>',
+};
+
+async function boot(){
+  try{
+    const r = await fetch("manifest.json",{cache:"no-store"});
+    if(!r.ok) throw new Error(r.status);
+    state.manifest = await r.json();
+  }catch(e){
+    $("#stage").innerHTML = `<div class="errbox"><h2>Couldn't load manifest.json</h2>
+      <p>The hub reads <code>manifest.json</code> from the same folder. Two likely causes:</p>
+      <p>1. You opened <code>index.html</code> directly from disk. Browsers block that — run <code>python3 -m http.server 8000</code> in the repo folder and open <code>http://localhost:8000</code>.</p>
+      <p>2. The manifest hasn't been built yet. Run <code>python3 scripts/build-manifest.py</code>. (On GitHub Pages this happens automatically on every push.)</p></div>`;
+    return;
+  }
+  const m = state.manifest;
+  $("#gen").textContent = m.generated ? `updated ${fmtDate(m.generated)}` : "";
+  if(m.repo){ $("#repolink").href = m.repo; } else { $("#repolink").classList.add("hidden"); }
+  const hash = location.hash.slice(1);
+  state.company = m.companies.find(c=>hash.startsWith(c.slug+"/"))?.slug || m.companies[0]?.slug;
+  renderCompanies(); renderFilters(); renderTree();
+  if(hash && hash!==state.company){ openPath(hash); } else { renderDashboard(); }
+  $("#q").addEventListener("input",e=>{ state.q=e.target.value.trim().toLowerCase(); renderTree(); });
+  $("#decisions").addEventListener("click",e=>{ e.preventDefault(); openPath("DECISIONS.md",{name:"DECISIONS.md",kind:"markdown",path:"DECISIONS.md",status:null}); });
+  window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(h && h!==(state.file?.path||"")) openPath(h); });
+}
+
+function company(){ return state.manifest.companies.find(c=>c.slug===state.company); }
+function allFiles(c){ return c.sections.flatMap(s=>s.files.map(f=>({...f,section:s.label}))); }
+
+function renderCompanies(){
+  $("#companies").innerHTML = state.manifest.companies.map(c=>
+    `<button role="tab" data-slug="${c.slug}" aria-pressed="${c.slug===state.company}" style="--c:${cvar(c.slug)}"><span class="dot"></span>${esc(c.name)}</button>`).join("");
+  $("#companies").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    state.company=b.dataset.slug; state.file=null; history.replaceState(null,"","#"+state.company);
+    renderCompanies(); renderTree(); renderDashboard();
+  }));
+}
+function renderFilters(){
+  $("#filters").innerHTML = STATUSES.map(s=>`<button data-s="${s}" aria-pressed="${state.filters.has(s)}" style="${svar(s)}">${STATUS_LABEL[s]}</button>`).join("");
+  $("#filters").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    const s=b.dataset.s; state.filters.has(s)?state.filters.delete(s):state.filters.add(s); renderFilters(); renderTree();
+  }));
+}
+function visible(f){
+  if(state.filters.size && !state.filters.has(f.status)) return false;
+  if(state.q && !(f.name.toLowerCase().includes(state.q)||f.path.toLowerCase().includes(state.q))) return false;
+  return true;
+}
+function renderTree(){
+  const c=company(); if(!c) return;
+  $("#tree").innerHTML = c.sections.map(s=>{
+    const files=s.files.filter(visible);
+    const open = state.open[c.slug+"/"+s.slug] ?? true;
+    return `<div class="section" data-open="${open}" data-key="${c.slug}/${s.slug}">
+      <button class="section-h" aria-expanded="${open}"><span style="display:flex;align-items:center"><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg><span class="lbl">${esc(s.label)}</span></span><span class="cnt">${files.length}</span></button>
+      ${files.length? `<ul class="files">${files.map(f=>`<li><button class="file" data-path="${esc(f.path)}" aria-current="${state.file?.path===f.path}" style="--c:${cvar(c.slug)};${svar(f.status)}" title="${esc(f.path)}"><span class="ic">${ICONS[f.kind]}</span><span class="nm">${esc(f.name)}</span><span class="st" title="${STATUS_LABEL[f.status]}"></span></button></li>`).join("")}</ul>`
+        : `<div class="empty-sec">${state.q||state.filters.size?"no matches":"nothing here yet"}</div>`}
+    </div>`;
+  }).join("");
+  $("#tree").querySelectorAll(".section-h").forEach(b=>b.addEventListener("click",()=>{
+    const sec=b.parentElement, k=sec.dataset.key, o=sec.dataset.open!=="true"; state.open[k]=o; sec.dataset.open=o; b.setAttribute("aria-expanded",o);
+  }));
+  $("#tree").querySelectorAll(".file").forEach(b=>b.addEventListener("click",()=>openPath(b.dataset.path)));
+}
+
+function findFile(path){
+  for(const c of state.manifest.companies) for(const s of c.sections) for(const f of s.files) if(f.path===path) return {...f,company:c,section:s};
+  return null;
+}
+function openPath(path, synthetic){
+  const f = findFile(path) || synthetic;
+  if(!f) { renderDashboard(); return; }
+  if(f.company && f.company.slug!==state.company){ state.company=f.company.slug; renderCompanies(); }
+  state.file=f; history.replaceState(null,"","#"+path); renderTree(); renderFile(f);
+}
+
+function renderFile(f){
+  const c=f.company, repo=state.manifest.repo;
+  const editUrl = repo?`${repo}/edit/main/${f.path}`:null, histUrl = repo?`${repo}/commits/main/${f.path}`:null;
+  $("#viewbar").innerHTML = `
+    <div class="path">${c?`<span style="color:${cvar(c.slug)}">${esc(c.name)}</span> / ${esc(f.section?.label||"")} / `:""}<b>${esc(f.name)}</b></div>
+    ${f.status?`<span class="pill" style="${svar(f.status)}">${STATUS_LABEL[f.status]}</span>`:""}
+    ${f.modified?`<span class="meta">${fmtDate(f.modified)} · ${fmtSize(f.size)}</span>`:""}
+    <div class="actions">
+      <a class="btn" href="${esc(f.path)}" target="_blank" rel="noopener">Open raw ↗</a>
+      ${histUrl?`<a class="btn" href="${histUrl}" target="_blank" rel="noopener">History</a>`:""}
+      ${editUrl?`<a class="btn primary" href="${editUrl}" target="_blank" rel="noopener">Edit on GitHub</a>`:""}
+    </div>`;
+  const note=$("#note");
+  if(f.note){ note.innerHTML=`<b>Note</b>${esc(f.note)}`; note.classList.remove("hidden"); } else note.classList.add("hidden");
+  const stage=$("#stage");
+  const kind=f.kind;
+  if(kind==="html"){
+    stage.innerHTML=`<div class="frame-wrap"><iframe src="${esc(f.path)}" title="${esc(f.name)}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe></div>`;
+  }else if(kind==="markdown"||kind==="text"||kind==="code"){
+    stage.innerHTML=`<div class="prose" style="color:var(--ink-3)">Loading…</div>`;
+    fetch(f.path,{cache:"no-store"}).then(r=>r.text()).then(t=>{
+      if(kind==="markdown" && window.marked){
+        // make relative image/link paths resolve from the file's folder
+        const base=f.path.split("/").slice(0,-1).join("/");
+        const html=marked.parse(t).replace(/(src|href)="(?!https?:|\/|#|mailto:)([^"]+)"/g,(m,a,p)=>`${a}="${base?base+"/":""}${p}"`);
+        stage.innerHTML=`<article class="prose">${html}</article>`;
+      }else{
+        stage.innerHTML=`<div class="codewrap"><pre>${esc(t)}</pre></div>`;
+      }
+    }).catch(()=>{ stage.innerHTML=`<div class="errbox"><h2>Couldn't load file</h2><p><code>${esc(f.path)}</code></p></div>`; });
+  }else if(kind==="image"){
+    stage.innerHTML=`<div class="imgwrap"><img src="${esc(f.path)}" alt="${esc(f.name)}"></div>`;
+  }else if(kind==="pdf"){
+    stage.innerHTML=`<div class="frame-wrap"><iframe src="${esc(f.path)}" title="${esc(f.name)}"></iframe></div>`;
+  }else{
+    stage.innerHTML=`<div class="dl"><div><div class="big">${esc(f.name.split(".").pop().toUpperCase())}</div><p>This file type doesn't preview in the browser.</p><a class="btn primary" href="${esc(f.path)}" download>Download ${esc(f.name)}</a></div></div>`;
+  }
+  stage.scrollTop=0;
+}
+
+function renderDashboard(){
+  const c=company(); if(!c) return;
+  state.file=null;
+  const files=allFiles(c);
+  const counts=Object.fromEntries(STATUSES.map(s=>[s,files.filter(f=>f.status===s).length]));
+  const recent=[...files].sort((a,b)=>new Date(b.modified)-new Date(a.modified)).slice(0,8);
+  const attention=files.filter(f=>f.status==="in-review"||f.status==="changes-requested");
+  $("#viewbar").innerHTML=`<div class="path"><span style="color:${cvar(c.slug)}">${esc(c.name)}</span> / <b>Overview</b></div><span class="meta">${files.length} file${files.length===1?"":"s"}</span>`;
+  $("#note").classList.add("hidden");
+  const total=Math.max(files.length,1);
+  $("#stage").innerHTML=`<div class="dash" style="--c:${cvar(c.slug)}">
+    <h2>${esc(c.name)}</h2>
+    <p class="lede">Everything Nicolette and Angie have built so far, in workflow order. Pick a file on the left to see it rendered; use the status filters above to jump to what's waiting on you.</p>
+    <div class="tiles">${STATUSES.map(s=>`<button class="tile" data-s="${s}" style="${svar(s)}"><span class="k">${STATUS_LABEL[s]}</span><span class="v">${counts[s]}</span><span class="h">${s==="draft"?"not yet submitted for review":s==="in-review"?"needs your call":s==="approved"?"settled — see Decisions":"sent back with notes"}</span></button>`).join("")}</div>
+    <div class="grid2">
+      <div class="card"><h3>${attention.length?`Waiting on you (${attention.length})`:"Recently changed"}</h3>
+        <ul class="rows">${(attention.length?attention:recent).map(f=>`<li><button data-path="${esc(f.path)}" style="${svar(f.status)}"><span><span class="nm">${esc(f.name)}</span><br><span class="sm">${esc(f.section)}${f.note?" · "+esc(f.note):""}</span></span><span class="pill">${STATUS_LABEL[f.status]}</span></button></li>`).join("") || `<li style="padding:14px 16px;color:var(--ink-3)">No files yet — drop them into the numbered folders and push.</li>`}</ul></div>
+      <div class="card"><h3>Sections</h3>
+        <ul class="secgrid">${c.sections.map(s=>{const n=s.files.length,a=s.files.filter(f=>f.status==="approved").length;return `<li><button data-sec="${esc(s.slug)}"><span><span class="nm">${esc(s.label)}</span><br><span class="sm">${n} file${n===1?"":"s"}${n?` · ${a} approved`:""}</span></span><span class="bar" style="${svar("approved")}"><span style="width:${n?100*a/n:0}%"></span></span></button></li>`}).join("")}</ul></div>
+    </div>
+    <div class="howto">To review: open a file, read it, then have Claude update <code>${esc(c.slug)}/status.json</code> and log the call in <code>DECISIONS.md</code>. Push, and this page updates within a minute.</div>
+  </div>`;
+  $("#stage").querySelectorAll(".tile").forEach(b=>b.addEventListener("click",()=>{ state.filters=new Set([b.dataset.s]); renderFilters(); renderTree(); }));
+  $("#stage").querySelectorAll(".rows button").forEach(b=>b.addEventListener("click",()=>openPath(b.dataset.path)));
+  $("#stage").querySelectorAll(".secgrid button").forEach(b=>b.addEventListener("click",()=>{
+    const s=c.sections.find(x=>x.slug===b.dataset.sec); const first=s?.files[0];
+    if(first) openPath(first.path); else if(s?.readme) openPath(s.readme,{name:"README.md",kind:"markdown",path:s.readme,status:null,company:c,section:s});
+  }));
+  history.replaceState(null,"","#"+c.slug);
+}
+boot();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "_help": "Keys are paths relative to this company folder. status: draft | in-review | approved | changes-requested. Cary (or his Claude) updates these.",
+  "files": {
+  }
+}
