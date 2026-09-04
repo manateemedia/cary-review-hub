@@ -16,7 +16,7 @@ COMPANIES = {
     "final-affairs": "Final Affairs",
     "shared": "Shared",
 }
-SKIP_NAMES = {".DS_Store", "status.json", ".gitkeep", "Thumbs.db"}
+SKIP_NAMES = {".DS_Store", "status.json", ".gitkeep", "Thumbs.db", "README.md"}  # README.md is shown as the section intro, not as a file
 KIND_BY_EXT = {
     ".html": "html", ".htm": "html",
     ".md": "markdown", ".markdown": "markdown", ".txt": "text",

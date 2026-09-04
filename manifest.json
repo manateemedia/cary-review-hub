@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-01T19:55:54",
-  "repo": "",
+  "generated": "2026-09-04T20:19:57",
+  "repo": "https://github.com/manateemedia/cary-review-hub",
   "companies": [
     {
       "slug": "gotacase",
@@ -10,97 +10,37 @@
           "slug": "01-strategy",
           "label": "Strategy",
           "readme": "gotacase/01-strategy/README.md",
-          "files": [
-            {
-              "path": "gotacase/01-strategy/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 221,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "02-brand-and-design",
           "label": "Brand and Design",
           "readme": "gotacase/02-brand-and-design/README.md",
-          "files": [
-            {
-              "path": "gotacase/02-brand-and-design/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 266,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "03-website",
           "label": "Website",
           "readme": "gotacase/03-website/README.md",
-          "files": [
-            {
-              "path": "gotacase/03-website/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 251,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "04-copy-and-content",
           "label": "Copy and Content",
           "readme": "gotacase/04-copy-and-content/README.md",
-          "files": [
-            {
-              "path": "gotacase/04-copy-and-content/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 200,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "05-workflow",
           "label": "Workflow",
           "readme": "gotacase/05-workflow/README.md",
-          "files": [
-            {
-              "path": "gotacase/05-workflow/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 279,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "06-assets",
           "label": "Assets",
           "readme": "gotacase/06-assets/README.md",
-          "files": [
-            {
-              "path": "gotacase/06-assets/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 227,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         }
       ]
     },
@@ -112,33 +52,13 @@
           "slug": "01-strategy",
           "label": "Strategy",
           "readme": "final-affairs/01-strategy/README.md",
-          "files": [
-            {
-              "path": "final-affairs/01-strategy/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 226,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "02-brand-and-design",
           "label": "Brand and Design",
           "readme": "final-affairs/02-brand-and-design/README.md",
-          "files": [
-            {
-              "path": "final-affairs/02-brand-and-design/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 271,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "03-website",
@@ -146,13 +66,112 @@
           "readme": "final-affairs/03-website/README.md",
           "files": [
             {
-              "path": "final-affairs/03-website/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 256,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
+              "path": "final-affairs/03-website/01-home-desktop.html",
+              "name": "01-home-desktop.html",
+              "kind": "html",
+              "size": 5900215,
+              "modified": "2026-09-04T20:19:34",
+              "status": "in-review",
+              "note": "Home page \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+            },
+            {
+              "path": "final-affairs/03-website/01-home-mobile.html",
+              "name": "01-home-mobile.html",
+              "kind": "html",
+              "size": 4944330,
+              "modified": "2026-09-04T20:19:35",
+              "status": "in-review",
+              "note": "Home page \u2014 mobile version. Should match the desktop page's content."
+            },
+            {
+              "path": "final-affairs/03-website/02-about-us-desktop.html",
+              "name": "02-about-us-desktop.html",
+              "kind": "html",
+              "size": 7887568,
+              "modified": "2026-09-04T20:19:29",
+              "status": "in-review",
+              "note": "About Us \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+            },
+            {
+              "path": "final-affairs/03-website/02-about-us-mobile.html",
+              "name": "02-about-us-mobile.html",
+              "kind": "html",
+              "size": 7893870,
+              "modified": "2026-09-04T20:19:31",
+              "status": "in-review",
+              "note": "About Us \u2014 mobile version. Should match the desktop page's content."
+            },
+            {
+              "path": "final-affairs/03-website/03-for-families-desktop.html",
+              "name": "03-for-families-desktop.html",
+              "kind": "html",
+              "size": 3574274,
+              "modified": "2026-09-04T20:19:32",
+              "status": "in-review",
+              "note": "For Families \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+            },
+            {
+              "path": "final-affairs/03-website/03-for-families-mobile.html",
+              "name": "03-for-families-mobile.html",
+              "kind": "html",
+              "size": 3247559,
+              "modified": "2026-09-04T20:19:37",
+              "status": "in-review",
+              "note": "For Families \u2014 mobile version. Should match the desktop page's content."
+            },
+            {
+              "path": "final-affairs/03-website/04-for-funeral-homes-desktop.html",
+              "name": "04-for-funeral-homes-desktop.html",
+              "kind": "html",
+              "size": 5019871,
+              "modified": "2026-09-04T20:19:33",
+              "status": "in-review",
+              "note": "For Funeral Homes \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+            },
+            {
+              "path": "final-affairs/03-website/04-for-funeral-homes-mobile.html",
+              "name": "04-for-funeral-homes-mobile.html",
+              "kind": "html",
+              "size": 5349161,
+              "modified": "2026-09-04T20:19:38",
+              "status": "in-review",
+              "note": "For Funeral Homes \u2014 mobile version. Should match the desktop page's content."
+            },
+            {
+              "path": "final-affairs/03-website/05-for-attorneys-desktop.html",
+              "name": "05-for-attorneys-desktop.html",
+              "kind": "html",
+              "size": 5905858,
+              "modified": "2026-09-04T20:19:32",
+              "status": "in-review",
+              "note": "For Attorneys \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+            },
+            {
+              "path": "final-affairs/03-website/05-for-attorneys-mobile.html",
+              "name": "05-for-attorneys-mobile.html",
+              "kind": "html",
+              "size": 5909642,
+              "modified": "2026-09-04T20:19:36",
+              "status": "in-review",
+              "note": "For Attorneys \u2014 mobile version. Should match the desktop page's content."
+            },
+            {
+              "path": "final-affairs/03-website/06-contact-us-desktop.html",
+              "name": "06-contact-us-desktop.html",
+              "kind": "html",
+              "size": 926985,
+              "modified": "2026-09-04T20:19:31",
+              "status": "in-review",
+              "note": "Contact Us \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+            },
+            {
+              "path": "final-affairs/03-website/06-contact-us-mobile.html",
+              "name": "06-contact-us-mobile.html",
+              "kind": "html",
+              "size": 1034771,
+              "modified": "2026-09-04T20:19:31",
+              "status": "in-review",
+              "note": "Contact Us \u2014 mobile version. Should match the desktop page's content."
             }
           ]
         },
@@ -160,49 +179,19 @@
           "slug": "04-copy-and-content",
           "label": "Copy and Content",
           "readme": "final-affairs/04-copy-and-content/README.md",
-          "files": [
-            {
-              "path": "final-affairs/04-copy-and-content/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 205,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "05-workflow",
           "label": "Workflow",
           "readme": "final-affairs/05-workflow/README.md",
-          "files": [
-            {
-              "path": "final-affairs/05-workflow/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 284,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         },
         {
           "slug": "06-assets",
           "label": "Assets",
           "readme": "final-affairs/06-assets/README.md",
-          "files": [
-            {
-              "path": "final-affairs/06-assets/README.md",
-              "name": "README.md",
-              "kind": "markdown",
-              "size": 232,
-              "modified": "2026-09-01T19:51:48",
-              "status": "draft",
-              "note": ""
-            }
-          ]
+          "files": []
         }
       ]
     },

@@ -1,5 +1,53 @@
 {
   "_help": "Keys are paths relative to this company folder. status: draft | in-review | approved | changes-requested. Cary (or his Claude) updates these.",
   "files": {
+    "03-website/01-home-desktop.html": {
+      "status": "in-review",
+      "note": "Home page \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+    },
+    "03-website/01-home-mobile.html": {
+      "status": "in-review",
+      "note": "Home page \u2014 mobile version. Should match the desktop page's content."
+    },
+    "03-website/02-about-us-desktop.html": {
+      "status": "in-review",
+      "note": "About Us \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+    },
+    "03-website/02-about-us-mobile.html": {
+      "status": "in-review",
+      "note": "About Us \u2014 mobile version. Should match the desktop page's content."
+    },
+    "03-website/03-for-families-desktop.html": {
+      "status": "in-review",
+      "note": "For Families \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+    },
+    "03-website/03-for-families-mobile.html": {
+      "status": "in-review",
+      "note": "For Families \u2014 mobile version. Should match the desktop page's content."
+    },
+    "03-website/04-for-funeral-homes-desktop.html": {
+      "status": "in-review",
+      "note": "For Funeral Homes \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+    },
+    "03-website/04-for-funeral-homes-mobile.html": {
+      "status": "in-review",
+      "note": "For Funeral Homes \u2014 mobile version. Should match the desktop page's content."
+    },
+    "03-website/05-for-attorneys-desktop.html": {
+      "status": "in-review",
+      "note": "For Attorneys \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+    },
+    "03-website/05-for-attorneys-mobile.html": {
+      "status": "in-review",
+      "note": "For Attorneys \u2014 mobile version. Should match the desktop page's content."
+    },
+    "03-website/06-contact-us-desktop.html": {
+      "status": "in-review",
+      "note": "Contact Us \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
+    },
+    "03-website/06-contact-us-mobile.html": {
+      "status": "in-review",
+      "note": "Contact Us \u2014 mobile version. Should match the desktop page's content."
+    }
   }
 }
