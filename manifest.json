@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-04T20:19:57",
+  "generated": "2026-09-04T20:29:51",
   "repo": "https://github.com/manateemedia/cary-review-hub",
   "companies": [
     {
@@ -58,7 +58,17 @@
           "slug": "02-brand-and-design",
           "label": "Brand and Design",
           "readme": "final-affairs/02-brand-and-design/README.md",
-          "files": []
+          "files": [
+            {
+              "path": "final-affairs/02-brand-and-design/final affairs stacked tm (14).png",
+              "name": "final affairs stacked tm (14).png",
+              "kind": "image",
+              "size": 408998,
+              "modified": "2026-09-04T22:24:28+02:00",
+              "status": "draft",
+              "note": ""
+            }
+          ]
         },
         {
           "slug": "03-website",
@@ -70,7 +80,7 @@
               "name": "01-home-desktop.html",
               "kind": "html",
               "size": 5900215,
-              "modified": "2026-09-04T20:19:34",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "Home page \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
             },
@@ -79,7 +89,7 @@
               "name": "01-home-mobile.html",
               "kind": "html",
               "size": 4944330,
-              "modified": "2026-09-04T20:19:35",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "Home page \u2014 mobile version. Should match the desktop page's content."
             },
@@ -88,7 +98,7 @@
               "name": "02-about-us-desktop.html",
               "kind": "html",
               "size": 7887568,
-              "modified": "2026-09-04T20:19:29",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "About Us \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
             },
@@ -97,7 +107,7 @@
               "name": "02-about-us-mobile.html",
               "kind": "html",
               "size": 7893870,
-              "modified": "2026-09-04T20:19:31",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "About Us \u2014 mobile version. Should match the desktop page's content."
             },
@@ -106,7 +116,7 @@
               "name": "03-for-families-desktop.html",
               "kind": "html",
               "size": 3574274,
-              "modified": "2026-09-04T20:19:32",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "For Families \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
             },
@@ -115,7 +125,7 @@
               "name": "03-for-families-mobile.html",
               "kind": "html",
               "size": 3247559,
-              "modified": "2026-09-04T20:19:37",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "For Families \u2014 mobile version. Should match the desktop page's content."
             },
@@ -124,7 +134,7 @@
               "name": "04-for-funeral-homes-desktop.html",
               "kind": "html",
               "size": 5019871,
-              "modified": "2026-09-04T20:19:33",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "For Funeral Homes \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
             },
@@ -133,7 +143,7 @@
               "name": "04-for-funeral-homes-mobile.html",
               "kind": "html",
               "size": 5349161,
-              "modified": "2026-09-04T20:19:38",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "For Funeral Homes \u2014 mobile version. Should match the desktop page's content."
             },
@@ -142,7 +152,7 @@
               "name": "05-for-attorneys-desktop.html",
               "kind": "html",
               "size": 5905858,
-              "modified": "2026-09-04T20:19:32",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "For Attorneys \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
             },
@@ -151,7 +161,7 @@
               "name": "05-for-attorneys-mobile.html",
               "kind": "html",
               "size": 5909642,
-              "modified": "2026-09-04T20:19:36",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "For Attorneys \u2014 mobile version. Should match the desktop page's content."
             },
@@ -160,7 +170,7 @@
               "name": "06-contact-us-desktop.html",
               "kind": "html",
               "size": 926985,
-              "modified": "2026-09-04T20:19:31",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "Contact Us \u2014 desktop version. Review layout, copy and flow; the mobile version is next."
             },
@@ -169,7 +179,7 @@
               "name": "06-contact-us-mobile.html",
               "kind": "html",
               "size": 1034771,
-              "modified": "2026-09-04T20:19:31",
+              "modified": "2026-09-04T20:20:08+00:00",
               "status": "in-review",
               "note": "Contact Us \u2014 mobile version. Should match the desktop page's content."
             }
