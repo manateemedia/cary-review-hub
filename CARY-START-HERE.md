@@ -6,6 +6,12 @@ This repo is everything Nicolette and Angie have built for **GotACase** and **Fi
 
 Open the live hub link Nicolette sent you (it ends in `github.io/cary-review-hub/`). Switch companies at the top, click any file on the left to see it rendered. The **In review** filter shows what's waiting on you.
 
+## Tell us what you want changed
+
+Every page in the hub has three buttons under the title: **Approve**, **Request changes**, and **Comment**. Click one, type your note in the box that opens (the page name is already filled in), and press the green button at the bottom. Nicolette and Angie get an email right away, and your note appears in the hub under that page so everyone sees the same thread. The **Feedback** link at the top of the hub lists everything you've said and whether it's been handled.
+
+The first time, GitHub will ask you to sign in — that's the free account Nicolette added you to.
+
 ## Make edits with your Claude
 
 One-time:

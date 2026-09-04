@@ -25,6 +25,15 @@ This repository is the review and staging hub for two companies being built by N
 4. Run `python3 scripts/build-manifest.py` so the hub picks up any new files (the GitHub Action also does this on push, so it's fine if you forget).
 5. Commit with a one-line message that says what changed and why, then push to `main`.
 
+## Cary's feedback (GitHub Issues)
+
+The hub has **Approve / Request changes / Comment** buttons on every page. Each one opens a GitHub Issue whose title starts with `[Approve]`, `[Changes]` or `[Comment]` and whose body begins with `Page: \`<path>\``. The hub reads these issues live: an *open* `[Approve]` issue shows the page as Approved, an *open* `[Changes]` issue shows it as Changes requested.
+
+- To see what Cary wants: `gh issue list` (or read them on GitHub). Filter by page with the `Page:` line.
+- When Nicolette or Angie have made a requested change: edit the file, update `status.json` (usually back to `in-review` with a note like "Changes from #12 applied"), **close the issue** with a short comment saying what changed, commit and push.
+- When Cary approves: set that file to `approved` in `status.json`, add a `DECISIONS.md` entry, and close the issue. Approval issues can stay open until then — the hub treats an open `[Approve]` as approved anyway.
+- Never delete issues; they are the paper trail.
+
 ## When Cary asks a question about the work
 
 Read the relevant folder first. `05-workflow/` in each company explains how the pieces fit together; `01-strategy/` explains why. Don't guess at intent — cite the file you got it from.

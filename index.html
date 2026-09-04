@@ -84,7 +84,8 @@ nav.side{border-right:1px solid var(--line);background:var(--panel);overflow-y:a
 .empty-sec{padding:2px 10px 6px;font:12px var(--mono);color:var(--ink-3)}
 
 /* ── Viewer ── */
-.view{display:grid;grid-template-rows:auto auto 1fr;min-height:0;min-width:0}
+.view{display:flex;flex-direction:column;min-height:0;min-width:0}
+.view>*{flex:none}
 .viewbar{display:flex;align-items:center;gap:14px;padding:0 20px;height:64px;border-bottom:1px solid var(--line);background:var(--panel)}
 .navbtn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--panel);font-weight:500;font-size:14px;color:var(--ink)}
 .navbtn:hover:not(:disabled){border-color:var(--line-strong);background:var(--panel-2)}
@@ -108,7 +109,25 @@ nav.side{border-right:1px solid var(--line);background:var(--panel);overflow-y:a
 .more .menu .k{padding:6px 12px 2px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
 .note{display:flex;gap:12px;align-items:baseline;padding:10px 20px;background:var(--in-review-bg);border-bottom:1px solid var(--line);font-size:14px}
 .note b{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--in-review);white-space:nowrap}
-.stage{position:relative;min-height:0;overflow:auto;background:var(--bg)}
+.fb{display:flex;align-items:center;gap:10px;padding:8px 20px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.fb .lbl{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-right:4px}
+.fbtn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:8px;border:1px solid var(--line);background:var(--panel);font-weight:500;font-size:13px;color:var(--ink);text-decoration:none}
+.fbtn:hover{background:var(--panel-2);border-color:var(--line-strong)}
+.fbtn::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--s,var(--ink-3))}
+.fbtn.ok{--s:var(--approved)} .fbtn.chg{--s:var(--changes-requested)} .fbtn.cmt{--s:var(--ink-3)}
+.fb .thread{flex:1;min-width:0;display:flex;justify-content:flex-end}
+.fb .thread button{font-size:13px;color:var(--ink-2);padding:6px 10px;border-radius:6px}
+.fb .thread button:hover{background:var(--panel-2);color:var(--ink)}
+.fb .thread button b{color:var(--ink);font-weight:600}
+.msgs{padding:14px 20px 4px;background:var(--panel);border-bottom:1px solid var(--line);display:grid;gap:10px;max-height:38vh;overflow:auto}
+.msg{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.msg .who{font:500 12px var(--mono);color:var(--s);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.msg .who::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--s)}
+.msg .body{font-size:14px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.msg .when{font:12px var(--mono);color:var(--ink-3);white-space:nowrap;text-decoration:none}
+.msg .when:hover{color:var(--ink)}
+.msg.closed{opacity:.6}
+.stage{position:relative;flex:1 1 auto!important;min-height:0;overflow:auto;background:var(--bg)}
 .stage iframe{width:100%;height:100%;border:0;background:#fff;display:block}
 .frame-wrap{height:100%;display:flex;flex-direction:column}
 .frame-wrap.phone{align-items:center;justify-content:flex-start;padding:24px 0;background:
@@ -181,6 +200,7 @@ nav.side{border-right:1px solid var(--line);background:var(--panel);overflow-y:a
     <div class="companies" id="companies" role="tablist"></div>
     <div class="spacer"></div>
     <div class="scope" id="scope"></div>
+    <a class="headlink" id="feedback" href="#">Feedback</a>
     <a class="headlink" id="decisions" href="#">Decisions</a>
   </header>
   <main>
@@ -188,6 +208,8 @@ nav.side{border-right:1px solid var(--line);background:var(--panel);overflow-y:a
     <section class="view">
       <div class="viewbar" id="viewbar"></div>
       <div class="note hidden" id="note"></div>
+      <div class="fb hidden" id="fb"></div>
+      <div class="msgs hidden" id="msgs"></div>
       <div class="stage" id="stage"></div>
     </section>
   </main>
@@ -196,7 +218,34 @@ nav.side{border-right:1px solid var(--line);background:var(--panel);overflow-y:a
 <script>
 const STATUSES = ["draft","in-review","approved","changes-requested"];
 const LABEL = {"draft":"Draft","in-review":"In review","approved":"Approved","changes-requested":"Changes requested"};
-const state = { m:null, company:null, idx:-1, scope:"all", fit:"phone" };
+const state = { m:null, company:null, idx:-1, scope:"all", fit:"phone", issues:[], issuesLoaded:false, showThread:false };
+const TYPES = {approve:{label:"Approve",title:"[Approve]",cls:"ok",status:"approved"}, changes:{label:"Request changes",title:"[Changes]",cls:"chg",status:"changes-requested"}, comment:{label:"Comment",title:"[Comment]",cls:"cmt",status:null}};
+function repoSlug(){ const m=(state.m.repo||"").match(/github\.com\/([^/]+\/[^/]+)/); return m?m[1]:null; }
+async function loadFeedback(){
+  const slug=repoSlug(); if(!slug) return;
+  try{
+    const r=await fetch(`https://api.github.com/repos/${slug}/issues?state=all&per_page=100&sort=created&direction=desc`,{headers:{Accept:"application/vnd.github+json"}});
+    if(!r.ok) throw 0;
+    const raw=await r.json();
+    state.issues = raw.filter(i=>!i.pull_request).map(i=>{
+      const m=(i.body||"").match(/Page:\s*`([^`]+)`/); const t=Object.keys(TYPES).find(k=>i.title.startsWith(TYPES[k].title))||"comment";
+      const body=(i.body||"").replace(/^Page:.*$/m,"").replace(/^Reviewed in the hub:.*$/m,"").trim();
+      return {path:m?m[1]:null,type:t,title:i.title,body,user:i.user?.login||"",date:i.created_at,url:i.html_url,open:i.state==="open",n:i.number,comments:i.comments};
+    });
+  }catch(e){ state.issues=[]; }
+  state.issuesLoaded=true;
+  renderTop(); if(state.idx>=0) renderFeedback(files()[state.idx]);
+}
+function feedbackFor(path){ return state.issues.filter(i=>i.path===path); }
+function effectiveStatus(f){
+  const open=feedbackFor(f.path).filter(i=>i.open && TYPES[i.type].status);
+  return open.length ? TYPES[open[0].type].status : f.status;
+}
+function newIssueUrl(type,f,c){
+  const T=TYPES[type]; const title=`${T.title} ${c.name} — ${pretty(f.name)}`;
+  const body=`Page: \`${f.path}\`\nReviewed in the hub: ${location.origin+location.pathname}#${f.path}\n\n${type==="approve"?"Approved. Notes (optional):\n":type==="changes"?"What I'd like changed:\n":"Comment:\n"}`;
+  return `${state.m.repo}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
 const $ = (s,el=document)=>el.querySelector(s);
 const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmtDate = iso => { const d=new Date(iso); return isNaN(d)?"":d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}); };
@@ -219,9 +268,11 @@ async function boot(){
   renderTop();
   const list = files();
   const i = list.findIndex(f=>f.path===hash);
-  if(i>=0) show(i); else if(hash==="DECISIONS.md") showDecisions(); else showStart();
+  if(i>=0) show(i); else if(hash==="DECISIONS.md") showDecisions(); else if(hash==="feedback") showFeedback(); else showStart();
   $("#home").addEventListener("click",showStart);
   $("#decisions").addEventListener("click",e=>{e.preventDefault();showDecisions();});
+  $("#feedback").addEventListener("click",e=>{e.preventDefault();showFeedback();});
+  loadFeedback();
   document.addEventListener("keydown",e=>{
     if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA") return;
     if(e.key==="ArrowRight"||e.key==="ArrowDown"){ e.preventDefault(); step(1); }
@@ -230,7 +281,7 @@ async function boot(){
   window.addEventListener("hashchange",()=>{ const h=decodeURIComponent(location.hash.slice(1)); const j=files().findIndex(f=>f.path===h); if(j>=0 && j!==state.idx) show(j); });
 }
 function company(){ return state.m.companies.find(c=>c.slug===state.company); }
-function allFiles(){ const c=company(); return c? c.sections.flatMap(s=>s.files.map(f=>({...f,section:s.label}))) : []; }
+function allFiles(){ const c=company(); return c? c.sections.flatMap(s=>s.files.map(f=>{ const x={...f,section:s.label}; x.status=effectiveStatus(x); return x; })) : []; }
 function files(){ const a=allFiles(); return state.scope==="review" ? a.filter(f=>f.status==="in-review"||f.status==="changes-requested") : a; }
 
 function renderTop(){
@@ -274,7 +325,31 @@ function show(i){
   $("#prev").addEventListener("click",()=>step(-1)); $("#next").addEventListener("click",()=>step(1));
   const note=$("#note");
   if(f.note){ note.innerHTML=`<b>For Cary</b><span>${esc(f.note)}</span>`; note.classList.remove("hidden"); } else note.classList.add("hidden");
+  renderFeedback(f);
   renderStage(f);
+}
+function renderFeedback(f){
+  const c=company(), fb=$("#fb"), msgs=$("#msgs");
+  if(!state.m.repo){ fb.classList.add("hidden"); msgs.classList.add("hidden"); return; }
+  const list=feedbackFor(f.path), open=list.filter(i=>i.open).length;
+  fb.innerHTML=`<span class="lbl">Your call</span>
+    ${Object.keys(TYPES).map(k=>`<a class="fbtn ${TYPES[k].cls}" href="${newIssueUrl(k,f,c)}" target="_blank" rel="noopener">${TYPES[k].label}</a>`).join("")}
+    <div class="thread">${state.issuesLoaded ? (list.length?`<button id="thr"><b>${list.length}</b> note${list.length===1?"":"s"} on this page${open?` · ${open} open`:""} ${state.showThread?"▴":"▾"}</button>`:`<span style="font:12px var(--mono);color:var(--ink-3)">No notes on this page yet</span>`) : `<span style="font:12px var(--mono);color:var(--ink-3)">Loading notes…</span>`}</div>`;
+  fb.classList.remove("hidden");
+  $("#thr")?.addEventListener("click",()=>{ state.showThread=!state.showThread; renderFeedback(f); });
+  if(state.showThread && list.length){
+    msgs.innerHTML=list.map(i=>`<div class="msg ${i.open?"":"closed"}" style="${svar(TYPES[i.type].status||"draft")}"><span class="who">${esc(TYPES[i.type].label)} · ${esc(i.user)}</span><div class="body">${esc(i.body)||"<i>(no text)</i>"}${i.comments?`<div style="margin-top:6px;font:12px var(--mono);color:var(--ink-3)">${i.comments} repl${i.comments===1?"y":"ies"} on GitHub</div>`:""}</div><a class="when" href="${i.url}" target="_blank" rel="noopener">${fmtDate(i.date)}${i.open?"":" · resolved"} ↗</a></div>`).join("");
+    msgs.classList.remove("hidden");
+  } else msgs.classList.add("hidden");
+}
+function showFeedback(){
+  state.idx=-1; history.replaceState(null,"","#feedback"); renderSide(); $("#note").classList.add("hidden"); $("#fb").classList.add("hidden"); $("#msgs").classList.add("hidden");
+  const all=state.issues, open=all.filter(i=>i.open);
+  $("#viewbar").innerHTML=`<div class="title"><div class="t">Feedback</div><div class="sub">${all.length} note${all.length===1?"":"s"} · ${open.length} open</div></div>${state.m.repo?`<a class="btn" href="${state.m.repo}/issues" target="_blank" rel="noopener">All on GitHub ↗</a>`:""}`;
+  const byPath={}; for(const f of state.m.companies.flatMap(c=>c.sections.flatMap(s=>s.files.map(f=>({...f,company:c,section:s.label}))))) byPath[f.path]=f;
+  $("#stage").innerHTML=`<div class="start"><h2 style="color:var(--ink)">Everything Cary has said</h2><p class="lede">${all.length?"Newest first. Open notes still need action from Nicolette or Angie; resolved ones have been handled.":"Nothing yet. When Cary clicks Approve, Request changes or Comment on a page, it shows up here."}</p>
+    <div style="display:grid;gap:10px">${all.map(i=>{const f=byPath[i.path]; return `<div class="msg ${i.open?"":"closed"}" style="${svar(TYPES[i.type].status||"draft")}"><span class="who">${esc(TYPES[i.type].label)} · ${esc(i.user)}</span><div><div style="font-weight:600;margin-bottom:4px">${f?`<button style="padding:0;font:inherit;color:var(--accent);text-decoration:underline" data-path="${esc(f.path)}">${esc(f.company.name)} — ${esc(pretty(f.name))}</button>`:esc(i.title)}</div><div class="body">${esc(i.body)||"<i>(no text)</i>"}</div></div><a class="when" href="${i.url}" target="_blank" rel="noopener">${fmtDate(i.date)}${i.open?"":" · resolved"} ↗</a></div>`;}).join("")}</div></div>`;
+  $("#stage").querySelectorAll("button[data-path]").forEach(b=>b.addEventListener("click",()=>{ const f=byPath[b.dataset.path]; if(f.company.slug!==state.company){ state.company=f.company.slug; renderTop(); } const j=files().findIndex(x=>x.path===f.path); if(j>=0) show(j); }));
 }
 function renderStage(f){
   const stage=$("#stage"); stage.scrollTop=0;
@@ -304,7 +379,7 @@ function renderStage(f){
 
 function showStart(){
   const c=company(); if(!c) return;
-  state.idx=-1; history.replaceState(null,"","#"+c.slug); renderSide(); $("#note").classList.add("hidden");
+  state.idx=-1; history.replaceState(null,"","#"+c.slug); renderSide(); $("#note").classList.add("hidden"); $("#fb").classList.add("hidden"); $("#msgs").classList.add("hidden");
   const list=files(), all=allFiles();
   const counts=Object.fromEntries(STATUSES.map(s=>[s,all.filter(f=>f.status===s).length]));
   const waiting=counts["in-review"]+counts["changes-requested"];
@@ -325,7 +400,7 @@ function showStart(){
   $("#stage").querySelectorAll(".toc button").forEach(b=>b.addEventListener("click",()=>show(+b.dataset.i)));
 }
 function showDecisions(){
-  state.idx=-1; history.replaceState(null,"","#DECISIONS.md"); renderSide(); $("#note").classList.add("hidden");
+  state.idx=-1; history.replaceState(null,"","#DECISIONS.md"); renderSide(); $("#note").classList.add("hidden"); $("#fb").classList.add("hidden"); $("#msgs").classList.add("hidden");
   $("#viewbar").innerHTML=`<div class="title"><div class="t">Decisions</div><div class="sub">Cary's running log — newest first</div></div>${state.m.repo?`<a class="btn" href="${state.m.repo}/edit/main/DECISIONS.md" target="_blank" rel="noopener">Edit on GitHub ↗</a>`:""}`;
   renderStage({path:"DECISIONS.md",name:"DECISIONS.md",kind:"markdown"});
 }
